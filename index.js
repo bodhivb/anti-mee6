@@ -9,7 +9,10 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   if (msg.author.id === Mee6) {
-    msg.react('💩');
+
+    if (Math.round(Math.random()) >= 1)
+      msg.react('💩');
+    else msg.react('🤮')
   }
 });
 
