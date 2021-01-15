@@ -1,0 +1,22 @@
+{
+  "name": "anti-mee6",
+  "version": "1.0.0",
+  "description": "anti-mee6 is a Discord Bot built with discord.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bodhivb/anti-mee6.git"
+  },
+  "author": "Bodhi van Baardewijk & Gido Selten",
+  "bugs": {
+    "url": "https://github.com/Bodhivb/anti-mee6/issues"
+  },
+  "homepage": "https://github.com/Bodhivb/anti-mee6#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  }
+}
