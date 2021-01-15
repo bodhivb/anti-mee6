@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const statusManager = require('./status-manager')(client);
+const statusManager = require('./statusManager')(client);
 require('dotenv').config();
 const Mee6 = "159985870458322944"
 
