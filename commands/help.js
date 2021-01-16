@@ -1,18 +1,22 @@
 module.exports.config = {
-    name: "help",
-    usage: "help {command}"
+  name: "help",
+  description: "An help page",
+  usage: "help {command}",
 };
 
 module.exports.run = async (bot, message, args) => {
-    let helpMessages = []
-    bot.commands.forEach((key, value) => {
-        helpMessages.push(key.config.name);
+  let helpMessages = [];
+  bot.commands.forEach((command) => {
+    helpMessages.push({
+      name: command.config.name,
+      value: command.config.description + ". Usage: " + command.config.usage,
     });
-    //`\` @${bot.user.displayName}#${bot.user.discriminator}` + helpMessages.join("`, `") + "`" //voor usage enzo
-    message.channel.send({
-        embed: {
-            title: "Help",
-            description: "`" + helpMessages.join("`, `") + "`",
-        }
-    });
+  });
+
+  message.channel.send({
+    embed: {
+      title: "Help",
+      fields: helpMessages,
+    },
+  });
 };
