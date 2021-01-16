@@ -16,7 +16,9 @@
   },
   "homepage": "https://github.com/Bodhivb/anti-mee6#readme",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "gifencoder": "^2.0.1"
   }
 }
