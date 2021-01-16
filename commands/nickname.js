@@ -1,6 +1,7 @@
 const MEE6 = "159985870458322944";
 module.exports.config = {
     name: "nickname",
+    usage: 'nickname [nickname]'
 };
 
 module.exports.run = async (bot, message, args) => {
