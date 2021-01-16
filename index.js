@@ -1,21 +1,13 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const statusManager = require('./libraries/statusManager')(client);
-require('dotenv').config();
-const Mee6 = "159985870458322944"
+require("dotenv").config();
+const Discord = require("discord.js");
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  const statusInterval = setInterval(statusManager.ChangeStatus, .5 * 60 * 60 * 1000)
+const bot = new Discord.Client();
+
+bot.on("ready", () => {
+  console.log(`Logged in as ${bot.user.tag}!`);
+  const statusInterval = setInterval(statusManager.ChangeStatus, 0.5 * 60 * 60 * 1000);
 });
 
-client.on('message', msg => {
-  if (msg.author.id === Mee6) {
+bot.on("message", (msg) => {});
 
-    if (Math.round(Math.random()) >= 1)
-      msg.react('💩');
-    else msg.react('🤮')
-  }
-});
-
-client.login(process.env.TOKEN);
+bot.login(process.env.TOKEN);
