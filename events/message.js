@@ -13,7 +13,6 @@ module.exports = async (bot, message) => {
   //TODO: Make check mention function
   if (!message.content.startsWith(prefix)) return;
 
-  message.react("😈");
   const args = message.content.slice(prefix.length).split(" ");
   if (args[0] === "") args.shift();
 
