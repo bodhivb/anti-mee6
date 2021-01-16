@@ -1,13 +1,21 @@
 require("dotenv").config();
+const fs = require("fs");
 const Discord = require("discord.js");
 
 const bot = new Discord.Client();
+bot.commands = new Discord.Collection();
 
-bot.on("ready", () => {
-  console.log(`Logged in as ${bot.user.tag}!`);
-  const statusInterval = setInterval(statusManager.ChangeStatus, 0.5 * 60 * 60 * 1000);
-});
+console.log("Loading events...");
+try {
+  fs.readdirSync("./events/").forEach((file) => {
+    const event = require(`./events/${file}`);
+    const eventName = file.substr(0, file.indexOf("."));
+    bot.on(eventName, event.bind(null, bot));
+    console.log(`Loaded event ${eventName} (${file})`);
+  });
+} catch (err) {
+  console.log(`Error while loading events. ${err}`);
+}
 
-bot.on("message", (msg) => {});
-
+// Start bot
 bot.login(process.env.TOKEN);
