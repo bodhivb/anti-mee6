@@ -26,3 +26,6 @@ try {
 
 // Start bot
 bot.login(process.env.TOKEN);
+
+//Set custom logger
+require("./libraries/logger")(bot);
