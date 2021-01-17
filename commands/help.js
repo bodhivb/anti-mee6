@@ -44,6 +44,7 @@ module.exports.run = async (bot, message, args) => {
   message.author.send({
     embed: {
       title: "Available commands",
+      description: `[] = required parameters\n{} = optional parameters`,
       color: 12901133,
       fields: helpMessages,
     },

@@ -37,10 +37,13 @@ function GetUser(_user) {
         if (!created) {
             users.insert({ id: _user.id, level: 0, exp: 0 })
                 .then((doc) => {
+                    doc.admin = doc.admin || false;
                     resolve(doc);
                 })
-        } else
+        } else {
+            created.admin = created.admin || false;
             resolve(created);
+        }
     })
 };
 
@@ -50,6 +53,7 @@ module.exports.GainExp = async (_user, exp = 1) => {
         const NewLvl = DoesLevelUP(user.level, user.exp, exp)
         users.findOneAndUpdate({ id: _user.id }, { $set: { level: NewLvl.newLvl, exp: NewLvl.newExp } })
             .then(doc => {
+                doc.admin = doc.admin || false;
                 resolve({ lvlup: NewLvl.lvlup, doc: doc });
             })
     })
