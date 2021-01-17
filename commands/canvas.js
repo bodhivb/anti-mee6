@@ -1,4 +1,5 @@
 const Canvas = require("canvas");
+const db = require('../libraries/dataManager');
 const Discord = require("discord.js");
 
 module.exports.config = {
@@ -10,6 +11,7 @@ module.exports.config = {
 module.exports.run = async (bot, message, args) => {
   const canvas = Canvas.createCanvas(936, 282);
   const context = canvas.getContext("2d");
+  const user = await db.GetUser(message.author);
 
   const background = await Canvas.loadImage("./resources/images/triangles.png");
   context.drawImage(
@@ -40,7 +42,7 @@ module.exports.run = async (bot, message, args) => {
   context.fillText(message.member.displayName, 282, 100);
   context.fillText("____________________", 284, 120);
   context.font = "32px Arial";
-  context.fillText("Level 1", 284, 180);
+  context.fillText("Level " + user.level, 284, 180);
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "rank.jpg");
 
