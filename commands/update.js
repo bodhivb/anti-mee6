@@ -11,10 +11,10 @@ module.exports.run = async (bot, message, args) => {
   if ((await db.GetUser(message.author)).admin) {
     const msg = await message.channel.send("Git fetch...");
 
-    exec("git fetch --all && git reset --hard origin/production", (err) => {
+    exec("git fetch --all && git reset --hard origin/production", async (err) => {
       if (err) return msg.edit("Git fetch failed. " + err);
 
-      msg.edit("Git fetch successful, restart bot.");
+      await msg.edit("Git fetch successful, restart bot.");
       bot.unloadCommands();
       process.exit(0);
     });
