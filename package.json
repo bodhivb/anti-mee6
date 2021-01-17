@@ -19,10 +19,7 @@
     "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-<<<<<<< HEAD
+    "gifencoder": "^2.0.1",
     "monk": "^7.3.2"
-=======
-    "gifencoder": "^2.0.1"
->>>>>>> eb86bf8a114ae8e675e2dd834b0276b1cd61686e
   }
 }
