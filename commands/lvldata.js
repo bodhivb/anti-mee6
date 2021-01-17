@@ -1,6 +1,9 @@
 const db = require('../libraries/dataManager');
 module.exports.config = {
     name: "lvldata",
+    description:
+    "Test message to show exp and level",
+  usage: "lvldata",
 };
 
 module.exports.run = async (bot, message, args) => {

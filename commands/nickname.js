@@ -2,7 +2,9 @@ const db = require('../libraries/dataManager');
 const MEE6 = "159985870458322944";
 module.exports.config = {
     name: "nickname",
-    usage: 'nickname [nickname]'
+    usage: 'nickname [nickname]',
+    description:
+    "Change the nickname of MEE6",
 };
 
 module.exports.run = async (bot, message, args) => {

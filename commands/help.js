@@ -38,10 +38,9 @@ module.exports.run = async (bot, message, args) => {
   bot.commands.forEach((command) => {
     helpMessages.push({
       name: command.config.name,
-      value: command.config.description + ". Usage: " + command.config.usage,
+      value: command.config.description + `. \nUsage: \`@${bot.user.username}#${bot.user.discriminator} ` + command.config.usage + "`",
     });
   });
-
   message.author.send({
     embed: {
       title: "Available commands",
