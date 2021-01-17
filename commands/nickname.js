@@ -1,3 +1,4 @@
+const db = require('../libraries/dataManager');
 const MEE6 = "159985870458322944";
 module.exports.config = {
     name: "nickname",
@@ -9,8 +10,8 @@ module.exports.run = async (bot, message, args) => {
     if (args.length < 1) return;
     let member = await message.guild.members.fetch(MEE6);
     member.setNickname(args.join(' ')).then(() => {
-
         message.react('👿')
+        db.GainExp(message.author, 1);
     }).catch(err => {
         message.react('😤');
     });
