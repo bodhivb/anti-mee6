@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     exec("git fetch --all && git reset --hard origin/production", (err) => {
       if (err) return msg.edit("Git fetch failed. " + err);
 
-      await msg.edit("Git fetch successful, restart bot.");
+      msg.edit("Git fetch successful, restart bot.");
       bot.unloadCommands();
       process.exit(0);
     });
