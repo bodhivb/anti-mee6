@@ -1,6 +1,6 @@
 module.exports.config = {
   name: "ping",
-  description:    "ping bot",
+  description: "ping bot",
   usage: "ping",
 };
 

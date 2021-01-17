@@ -5,21 +5,11 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 
-// Loads each command in "commands" folder
-console.log("Loading commands...");
-try {
-  fs.readdirSync("./commands/").forEach((file) => {
-    //Only js code may be loaded
-    if (!file.endsWith(".js")) return;
+//Added useful functions to bot
+require("./libraries/functions")(bot);
 
-    const command = require(`./commands/${file}`);
-    const commandName = command.config.name;
-    bot.commands.set(commandName, command);
-    console.log(`Loaded command ${commandName} (${file})`);
-  });
-} catch (err) {
-  console.log(`Error while loading commands. ${err}`);
-}
+//Loads each command in "commands" folder
+bot.loadCommands();
 
 // Loads each event in "events" folder
 console.log("Loading events...");
