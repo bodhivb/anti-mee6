@@ -5,5 +5,5 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message, args) => {
-  message.channel.send("Pong!");
+  message.channel.send("Pong!!!");
 };
