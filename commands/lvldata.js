@@ -6,6 +6,6 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message, args) => {
-    const doc = await db.GetUser(user);
+    const doc = await db.GetUser(message.author);
     message.reply(`ID: ${doc.id} lvl: ${doc.level} exp: ${doc.exp} admin: ${doc.admin}`);
 };

@@ -1,6 +1,9 @@
 const monk = require('monk');
 const db = monk(process.env.MONGODB_URI);
 
+
+function ExpNeeded(lvl) { return (lvl * 2) + 10; }
+
 function DoesLevelUP(lvl, currentExp, addedExp) {
     const expNeeded = ExpNeeded(lvl);
 
@@ -20,9 +23,7 @@ function DoesLevelUP(lvl, currentExp, addedExp) {
     }
     return obj;
 }
-module.exports.ExpNeeded = function ExpNeeded(lvl) {
-    return (lvl * 2) + 10;
-}
+module.exports.ExpNeeded = ExpNeeded;
 
 const users = db.get('users')
 users.createIndex(['id', 'lvl'])
