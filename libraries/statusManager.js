@@ -5,6 +5,7 @@ class statusManager {
     this.stats = [
       { text: `MEE6 suffer.`, type: { type: "WATCHING" } },
       { text: `MEE6's grave.`, type: { type: "WATCHING" } },
+      { text: `Get me verified`, type: { type: "PLAYING" } },
       /*{ text: ``, type: { type: "LISTENING" } },
         { text: ``, type: { type: "PLAYING" } },*/
     ];
