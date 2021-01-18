@@ -8,12 +8,14 @@ module.exports = async (bot, message) => {
   }
   if (message.author.bot || message.webhookID) return; //if bot or webhook skip
 
-  const prefix = "<@!" + bot.user.id + ">";
+  const mention = "<@!" + bot.user.id + ">";
+  const prefix = "?"
 
   //TODO: Make check mention function
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.startsWith(prefix) && !message.content.startsWith(mention)) return;
+  const length = (message.content.startsWith(prefix)) ? prefix.length : mention.length;
 
-  const args = message.content.slice(prefix.length).split(" ");
+  const args = message.content.slice(length).split(" ");
   if (args[0] === "") args.shift();
 
   const commandName = args.shift().toLowerCase();
