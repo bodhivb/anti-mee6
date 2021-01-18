@@ -1,10 +1,11 @@
 const MEE6 = "159985870458322944";
+const emoji = ['💩', '🤮', '🤢']
 
 // Handling an incoming message
 module.exports = async (bot, message) => {
   //Check if message is from MEE6 bot?
   if (message.author.id === MEE6) {
-    message.react(Math.round(Math.random()) >= 1 ? "💩" : "🤮");
+    message.react(RandomEmoji());
   }
   if (message.author.bot || message.webhookID) return; //if bot or webhook skip
 
@@ -22,3 +23,7 @@ module.exports = async (bot, message) => {
   const command = bot.commands.get(commandName);
   if (command) command.run(bot, message, args);
 };
+
+function RandomEmoji() {
+  return emoji[Math.floor(Math.random() * emoji.length)];
+}
