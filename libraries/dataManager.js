@@ -51,6 +51,18 @@ function GetUser(_user) {
     })
 };
 
+const ChangeBackground = async (message, image, _user = undefined) => {
+    return new Promise(async (resolve, reject) => {
+        _user = _user || message.author;
+        const user = await GetUser(_user)
+        users.findOneAndUpdate({ id: _user.id }, { $set: { bg: image } })
+            .then(user => {
+                user.admin = user.admin || false;
+                resolve({ user });
+            })
+    })
+}
+
 const GainExp = async (message, exp = 1, _user = undefined) => {
     return new Promise(async (resolve, reject) => {
         _user = _user || message.author;
@@ -74,5 +86,5 @@ function LevelUpMessage(msg, userLvl) {
         }
     })
 }
-
+module.exports.ChangeBackground = ChangeBackground;
 module.exports.GainExp = GainExp;

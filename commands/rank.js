@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args) => {
   const canvas = Canvas.createCanvas(936, 282);
   const context = canvas.getContext("2d");
 
-  const background = await Canvas.loadImage("./resources/images/mountains.png");
+  const background = await Canvas.loadImage(user.bg || "./resources/images/mountains.png");
   context.drawImage(
     background,
     0,
