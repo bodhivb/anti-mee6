@@ -4,7 +4,7 @@ module.exports.config = {
     name: "nickname",
     usage: 'nickname [nickname]',
     description:
-    "Change the nickname of MEE6",
+        "Change the nickname of MEE6",
 };
 
 module.exports.run = async (bot, message, args) => {
@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     let member = await message.guild.members.fetch(MEE6);
     member.setNickname(args.join(' ')).then(() => {
         message.react('👿')
-        db.GainExp(message.author, 1);
+        db.GainExp(message, 1);
     }).catch(err => {
         message.react('😤');
     });

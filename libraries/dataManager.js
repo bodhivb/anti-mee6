@@ -51,14 +51,28 @@ function GetUser(_user) {
     })
 };
 
-module.exports.GainExp = async (_user, exp = 1) => {
+const GainExp = async (message, exp = 1, _user = undefined) => {
     return new Promise(async (resolve, reject) => {
+        _user = _user || message.author;
         const user = await GetUser(_user)
         const NewLvl = DoesLevelUP(user.level, user.exp, exp)
         users.findOneAndUpdate({ id: _user.id }, { $set: { level: NewLvl.newLvl, exp: NewLvl.newExp } })
             .then(doc => {
                 doc.admin = doc.admin || false;
-                resolve({ lvlup: NewLvl.lvlup, doc: doc });
+                if (NewLvl.lvlup) LevelUpMessage(message, doc)
+                resolve({ lvlup: NewLvl.lvlup, user: doc });
             })
     })
 }
+function LevelUpMessage(msg, userLvl) {
+    let nextLvl = ExpNeeded(userLvl.level) - userLvl.exp;
+    msg.channel.send({
+        embed:
+        {
+            title: "LEVEL UP!",
+            description: `You leveled up to level: ${userLvl.level}\n\`${nextLvl}\` exp left to go for level ${userLvl.level + 1}`
+        }
+    })
+}
+
+module.exports.GainExp = GainExp;
