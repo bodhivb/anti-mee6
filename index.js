@@ -2,7 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const Discord = require("discord.js");
 
-const bot = new Discord.Client();
+const bot = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 bot.commands = new Discord.Collection();
 
 //Added useful functions to bot
