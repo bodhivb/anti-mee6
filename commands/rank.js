@@ -9,7 +9,8 @@ module.exports.config = {
 };
 
 module.exports.run = async (bot, message, args) => {
-  const user = await db.GetUser(message.author);
+  let target = (message.mentions.users.first()) ? message.mentions.users.first() : message.author;
+  const user = await db.GetUser(target);
   const barValue = (100 / db.ExpNeeded(user.level)) * user.exp;
 
   const lineColor = "rgb(200, 255, 240)";
@@ -31,7 +32,7 @@ module.exports.run = async (bot, message, args) => {
 
   //Draw circle avatar
   const avatar = await Canvas.loadImage(
-    message.member.user.displayAvatarURL({ format: "jpg", size: 2048 })
+    target.displayAvatarURL({ format: "jpg", size: 2048 })
   );
   drawCircleImage(context, 60, 40, 202, lineColor, avatar);
 
@@ -43,7 +44,7 @@ module.exports.run = async (bot, message, args) => {
   Canvas.registerFont("./resources/fonts/arial.ttf", { family: "Arial" });
   context.font = "56px Arial";
   context.fillStyle = "white";
-  context.fillText(message.member.displayName, 299, 100);
+  context.fillText(target.username, 299, 100);
   context.font = "32px Arial";
   context.fillStyle = "rgb(253, 255, 247)";
   context.fillText("Level " + user.level, 302, 165);
