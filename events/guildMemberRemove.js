@@ -6,6 +6,7 @@ module.exports = async (bot, member) => {
   //if MEE6
   if (member.user.id == "159985870458322944" && member.guild.id == guildID) {
     const channel = member.guild.channels.cache.get(channelId);
-    channel.send(`@ developer, MEE6 Was kicked, invite again! \n${inviteUrl}`);
+    if (process.env.ENVIRONMENT != "DEV")
+      channel.send(`@ developer, MEE6 Was kicked, invite again! \n${inviteUrl}`);
   }
 };
