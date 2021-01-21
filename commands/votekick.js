@@ -16,6 +16,8 @@ module.exports.run = async (bot, message, args) => {
       ? message.mentions.users.first()
       : getUserFromMention(bot, MEE6);
 
+    if (!target) return message.react("🚷");
+
     //Show vote embed
     let embed = new Discord.MessageEmbed().setTitle("Vote kick");
     embed.setColor("#0099ff");
@@ -41,11 +43,11 @@ module.exports.run = async (bot, message, args) => {
       if (reaction.emoji.name === "✅") {
         accepted.push(user);
         embed.fields[0].name = `✅ Accepted (${accepted.length})`;
-        embed.fields[0].value = accepted.map((u) => `| ${u} \n`);
+        embed.fields[0].value = accepted.map((u) => `| ${u}`);
       } else {
         declined.push(user);
         embed.fields[1].name = `❌ Declined (${declined.length})`;
-        embed.fields[1].value = declined.map((u) => `| ${u} \n`);
+        embed.fields[1].value = declined.map((u) => `| ${u}`);
       }
       msg.edit(embed);
     });
@@ -56,7 +58,7 @@ module.exports.run = async (bot, message, args) => {
         accepted.splice(accepted.indexOf(user), 1);
         embed.fields[0].name = `✅ Accepted (${accepted.length})`;
         if (accepted.length > 0) {
-          embed.fields[0].value = accepted.map((u) => `| ${u} \n`);
+          embed.fields[0].value = accepted.map((u) => `| ${u}`);
         } else {
           embed.fields[0].value = "|";
         }
@@ -64,7 +66,7 @@ module.exports.run = async (bot, message, args) => {
         declined.splice(accepted.indexOf(user), 1);
         embed.fields[1].name = `❌ Declined (${declined.length})`;
         if (declined.length > 0) {
-          embed.fields[1].value = declined.map((u) => `| ${u} \n`);
+          embed.fields[1].value = declined.map((u) => `| ${u}`);
         } else {
           embed.fields[1].value = "|";
         }
@@ -89,6 +91,9 @@ module.exports.run = async (bot, message, args) => {
         try {
           const member = message.guild.members.resolve(target);
           member.kick();
+
+          //TODO Give accepted voter exp
+          db.GainExp(message, 3);
         } catch {
           message.channel.send(`Error with permissions to kick ${target} :(`);
         }
