@@ -1,9 +1,14 @@
+const gGreen = "\x1b[32m";
 module.exports = (bot) => {
   var loggerTime;
   var loggerMessage = "```";
 
   console.log = function (message) {
+    if (typeof message === "object")
+      message = JSON.stringify(message, null, 2);
+
     process.stdout.write(message + "\n");
+
     loggerMessage += message + "\n";
     SendTimeOut();
   };
@@ -25,7 +30,7 @@ module.exports = (bot) => {
         await (await bot.channels.cache.get("800467462420168714")).send(
           loggerMessage + "```"
         );
-      } catch {}
+      } catch { }
       loggerMessage = "```";
     }, 1000);
   }
