@@ -13,10 +13,9 @@ app.use('/resources', express.static('resources'));
 
 module.exports = (bot) => {
     const commands = bot.commands.map(command => { return command.config; });
-    
+
     app.get('/', async (req, res) => {
-        const avatar = bot.user.displayAvatarURL({ format: "jpg", size: 256 });
-        res.render('index', { commands, avatar });
+        res.render('index', { commands });
     })
 
     app.listen(port, () => {
