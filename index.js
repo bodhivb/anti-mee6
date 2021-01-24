@@ -11,6 +11,8 @@ require("./libraries/functions")(bot);
 //Loads each command in "commands" folder
 bot.loadCommands();
 
+require("./libraries/website")(bot); //create website
+
 // Loads each event in "events" folder
 console.log("Loading events...");
 try {

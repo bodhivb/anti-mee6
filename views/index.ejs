@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" href="<%= avatar %>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands</title>
+    <link rel="stylesheet" href="resources/style/style.css">
+</head>
+
+<body>
+    <table style="width:80%">
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+            <th>Usage</th>
+        </tr>
+        <% commands.forEach(function(command){ %>
+            <%- include('command', {command}); %>
+                <% }); %>
+    </table>
+</body>
+
+</html>

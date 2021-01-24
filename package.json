@@ -17,9 +17,13 @@
   "homepage": "https://github.com/Bodhivb/anti-mee6#readme",
   "dependencies": {
     "canvas": "^2.6.1",
+    "cors": "^2.8.5",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
     "gifencoder": "^2.0.1",
+    "helmet": "^4.4.1",
     "monk": "^7.3.2"
   }
 }
