@@ -1,7 +1,6 @@
 const db = require("../libraries/dataManager");
 const Discord = require("discord.js");
-
-const MEE6 = "<@159985870458322944>";
+const { toMention, Bots } = require("../libraries/constants");
 
 module.exports.config = {
   name: "votekick",
@@ -14,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     //Set target
     const target = message.mentions.users.first()
       ? message.mentions.users.first()
-      : getUserFromMention(bot, MEE6);
+      : bot.getUserFromMention(toMention(Bots.MEE6));
 
     if (!target) return message.react("🚷");
 
@@ -105,17 +104,3 @@ module.exports.run = async (bot, message, args) => {
     );
   }
 };
-
-function getUserFromMention(bot, mention) {
-  if (!mention) return;
-
-  if (mention.startsWith("<@") && mention.endsWith(">")) {
-    mention = mention.slice(2, -1);
-
-    if (mention.startsWith("!")) {
-      mention = mention.slice(1);
-    }
-
-    return bot.users.cache.get(mention);
-  }
-}

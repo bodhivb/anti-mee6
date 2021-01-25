@@ -1,9 +1,9 @@
-const db = require('../libraries/dataManager');
-const hateEmoji = "<:hatemee6:799626808731238410>";
+const db = require("../libraries/dataManager");
+const { Emojis } = require("./constants");
 
 module.exports = async (bot, message) => {
+  await message.react(Emojis.HATE);
 
-    await message.react(hateEmoji);
     //Start vote
     const filter = (reaction, user) => "hatemee6" == reaction.emoji.name;
     const collector = message.createReactionCollector(filter, { dispose: true, time: 15000 });

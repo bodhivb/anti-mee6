@@ -16,7 +16,7 @@ module.exports = (bot) => {
         if (!file.endsWith(".js")) return;
 
         const command = require(`../commands/${file}`);
-        command.config = MakeValid(command.config, BaseCommand)
+        command.config = MakeValid(command.config, BaseCommand);
         const commandName = command.config.name;
         command.config.file = file;
         bot.commands.set(commandName, command);
@@ -36,17 +36,30 @@ module.exports = (bot) => {
         if (!file.endsWith(".js")) return;
         try {
           delete require.cache[require.resolve(`../commands/${file}`)];
-        } catch { }
+        } catch {}
       });
       bot.commands.clear();
     } catch (err) {
       console.log(`Error while unloading commands. ${err}`);
     }
   };
+
+  bot.getUserFromMention = (mention) => {
+    if (!mention) return;
+
+    if (mention.startsWith("<@") && mention.endsWith(">")) {
+      mention = mention.slice(2, -1);
+      if (mention.startsWith("!")) {
+        mention = mention.slice(1);
+      }
+
+      return bot.users.cache.get(mention);
+    }
+  };
 };
 
 function MakeValid(ob, compare) {
-  let newob = {}
+  let newob = {};
   for (let prop in compare) newob[prop] = ob[prop] || compare[prop];
   return newob;
 }
