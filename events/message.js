@@ -23,7 +23,10 @@ module.exports = async (bot, message) => {
   if (args.length < 1) return;
 
   const commandName = args.shift().toLowerCase();
-  const command = bot.commands.get(commandName);
+  const command =
+    bot.commands.get(commandName) ||
+    bot.commands.find((c) => c.config.aliases && c.config.aliases.includes(commandName));
+
   if (command) command.run(bot, message, args);
 };
 

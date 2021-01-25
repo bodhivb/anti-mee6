@@ -3,6 +3,7 @@ module.exports.config = {
   description:
     "Show you all of the commands. With {command} you can search for a specific command",
   usage: "help {command}",
+  aliases: ["command"],
 };
 
 module.exports.run = async (bot, message, args) => {

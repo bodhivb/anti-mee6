@@ -5,6 +5,7 @@ module.exports.config = {
   name: "nickname",
   usage: "nickname [nickname]",
   description: "Change the nickname of MEE6",
+  aliases: ["nick"],
 };
 
 module.exports.run = async (bot, message, args) => {

@@ -1,9 +1,10 @@
-const get = require('simple-get');
-const db = require('../libraries/dataManager');
+const get = require("simple-get");
+const db = require("../libraries/dataManager");
 module.exports.config = {
-    name: "background",
-    description: "change background image",
-    usage: "background {image url}",
+  name: "background",
+  description: "change background image",
+  usage: "background {image url}",
+  aliases: ["bg"],
 };
 
 module.exports.run = async (bot, message, args) => {

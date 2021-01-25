@@ -5,6 +5,7 @@ module.exports.config = {
   name: "rank",
   description: "Show your rank status",
   usage: "rank",
+  aliases: ["me", "level"],
 };
 
 module.exports.run = async (bot, message, args) => {

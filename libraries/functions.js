@@ -4,6 +4,7 @@ const BaseCommand = {
   name: "wip",
   description: "none",
   usage: "-",
+  aliases: [],
 };
 
 module.exports = (bot) => {
