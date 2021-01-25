@@ -1,11 +1,13 @@
 const MEE6 = "159985870458322944";
 const emoji = ["💩", "🤮", "🤢"];
+const emojiBully = require('../libraries/emojiBully')
 
 // Handling an incoming message
 module.exports = async (bot, message) => {
   //Check if message is from MEE6 bot?
   if (message.author.id === MEE6) {
     message.react(RandomEmoji());
+    emojiBully(bot, message);
   }
   if (message.author.bot || message.webhookID) return; //if bot or webhook skip
 
