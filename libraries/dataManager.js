@@ -1,5 +1,6 @@
 const monk = require('monk');
 const db = monk(process.env.MONGODB_URI);
+const { Color } = require('./constants');
 
 
 function ExpNeeded(lvl) { return (lvl * 2) + 10; }
@@ -82,6 +83,7 @@ function LevelUpMessage(msg, userLvl) {
         embed:
         {
             title: "LEVEL UP!",
+            color: Color.BLUE,
             description: `You leveled up to level: ${userLvl.level}\n\`${nextLvl}\` exp left to go for level ${userLvl.level + 1}`
         }
     })
