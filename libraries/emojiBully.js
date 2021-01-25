@@ -30,6 +30,6 @@ module.exports = async (bot, message) => {
             const user = voted[i];
             db.GainExp(message, 1, user);
         }
-        message.channel.send({ embed: { title: "bullying ended", color: "#62D0F6", description: "voters: " + voted.join(', ') } })
+        message.channel.send({ embed: { title: `bullying ended`, color: "#62D0F6", description: `[message](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}) - voters: ` + voted.join(', ') } })
     });
 }

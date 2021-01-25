@@ -5,10 +5,10 @@ const emojiBully = require('../libraries/emojiBully')
 // Handling an incoming message
 module.exports = async (bot, message) => {
   //Check if message is from MEE6 bot?
-  if (message.author.id === MEE6) {
+  if (message.author.id === MEE6 ) {
     message.react(RandomEmoji());
     emojiBully(bot, message);
-  }
+  } //else if (message.content.toLowerCase().includes('mee6 '))emojiBully(bot, message); //bully people who say mee6 (disabled for now)
   if (message.author.bot || message.webhookID) return; //if bot or webhook skip
 
   const mention = "<@!" + bot.user.id + ">";
