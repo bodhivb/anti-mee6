@@ -1,6 +1,7 @@
 const express = require('express')
 const helmet = require("helmet");
 const cors = require('cors');
+const Stats = require('./stats');
 const app = express()
 
 const port = 4466
@@ -17,6 +18,13 @@ module.exports = (bot) => {
     app.get('/', async (req, res) => {
         res.render('index', { commands });
     })
+
+    app.get('/stats', async (req, res) => {
+        const stats = await Stats(bot)
+        console.log(stats)
+        res.render('stats', { stats });
+    })
+
 
     app.listen(port, () => {
         console.log(`website was loaded (http://localhost:${port})`)
