@@ -20,8 +20,7 @@ module.exports = (bot) => {
     })
 
     app.get('/stats', async (req, res) => {
-        const stats = await Stats(bot)
-        console.log(stats)
+        const stats = await Stats(bot);
         res.render('stats', { stats });
     })
 
