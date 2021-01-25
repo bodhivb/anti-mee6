@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     };
     const name = encodeURIComponent(`${message.author.username}#${message.author.discriminator} (${message.author.id})`)
     const card = await PostIdea(encodeURIComponent(args.join(" ")), name);
-    message.channel.send({ embed: { title: "Card created", description: `Your card was created, you can find it [here](${card.shortUrl}).\nThe idea is:\n\`${card.name}\`` } });
+    message.channel.send({ embed: { title: "Card created",color: "#026AA7", description: `Your card was created, you can find it [here](${card.shortUrl}).\nThe idea is:\n\`${card.name}\`` } });
 };
 
 function PostIdea(name, desc) {
