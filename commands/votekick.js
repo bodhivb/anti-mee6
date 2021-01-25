@@ -91,8 +91,9 @@ module.exports.run = async (bot, message, args) => {
           const member = message.guild.members.resolve(target);
           member.kick();
 
-          //TODO Give accepted voter exp
-          db.GainExp(message, 3);
+          accepted.forEach((user) => {
+            db.GainExp(message, 2, user);
+          });
         } catch {
           message.channel.send(`Error with permissions to kick ${target} :(`);
         }
