@@ -1,5 +1,11 @@
 const fs = require("fs");
 
+const BaseCommand = {
+  name: "wip",
+  description: "none",
+  usage: "-",
+};
+
 module.exports = (bot) => {
   /** Loads each command in "commands" folder */
   bot.loadCommands = () => {
@@ -10,6 +16,7 @@ module.exports = (bot) => {
         if (!file.endsWith(".js")) return;
 
         const command = require(`../commands/${file}`);
+        command.config = MakeValid(command.config, BaseCommand)
         const commandName = command.config.name;
         command.config.file = file;
         bot.commands.set(commandName, command);
@@ -29,7 +36,7 @@ module.exports = (bot) => {
         if (!file.endsWith(".js")) return;
         try {
           delete require.cache[require.resolve(`../commands/${file}`)];
-        } catch {}
+        } catch { }
       });
       bot.commands.clear();
     } catch (err) {
@@ -37,3 +44,9 @@ module.exports = (bot) => {
     }
   };
 };
+
+function MakeValid(ob, compare) {
+  let newob = {}
+  for (let prop in compare) newob[prop] = ob[prop] || compare[prop];
+  return newob;
+}
