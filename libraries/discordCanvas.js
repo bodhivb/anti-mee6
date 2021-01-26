@@ -10,12 +10,17 @@ module.exports = class DiscordCanvas {
 
   async setBackground(url) {
     const background = await Canvas.loadImage(url);
+    const scale = Math.max(
+      this.canvas.width / background.width,
+      this.canvas.height / background.height
+    );
+
     this.context.drawImage(
       background,
-      0,
-      0,
-      this.canvas.width,
-      (background.width * this.canvas.height) / background.height
+      this.canvas.width / 2 - (background.width / 2) * scale,
+      this.canvas.height / 2 - (background.height / 2) * scale,
+      background.width * scale,
+      background.height * scale
     );
   }
 
