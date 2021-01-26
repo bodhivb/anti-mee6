@@ -2,13 +2,8 @@
     --mee6-blue: "#62CFF6"
 }
 
-@font-face {
-    font-family: arial;
-    src: url(../fonts/arial.ttf);
-}
-
 * {
-    font-family: arial;
+    font-family: Arial;
 }
 
 body {
