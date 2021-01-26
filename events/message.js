@@ -1,6 +1,6 @@
 const emoji = ["💩", "🤮", "🤢"];
 const { Bots } = require("../libraries/constants");
-const emojiBully = require("../libraries/emojiBully");
+const emojiBully = require("../triggers/emojiBully");
 
 // Handling an incoming message
 module.exports = async (bot, message) => {

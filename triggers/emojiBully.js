@@ -1,5 +1,5 @@
 const db = require("../libraries/dataManager");
-const { Emojis } = require("./constants");
+const { Emojis } = require("../libraries/constants");
 
 module.exports = async (bot, message) => {
     await message.react(Emojis.HATE);
