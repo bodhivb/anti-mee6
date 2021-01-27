@@ -6,6 +6,7 @@ module.exports.config = {
   name: "votekick",
   description: "Start vote to kick MEE6",
   usage: "votekick",
+  admin: true,
 };
 
 module.exports.run = async (bot, message, args) => {

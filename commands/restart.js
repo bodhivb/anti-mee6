@@ -4,6 +4,7 @@ module.exports.config = {
   name: "restart",
   description: "Restart bot",
   usage: "restart",
+  admin: true,
 };
 
 module.exports.run = async (bot, message, args) => {

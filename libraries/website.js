@@ -13,7 +13,7 @@ app.use(cors());
 app.use('/resources', express.static('resources'));
 
 module.exports = (bot) => {
-    const commands = bot.commands.map(command => { return command.config; });
+    const commands = bot.commands.map(command => { if (command.config.enabled) return command.config; });
 
     app.get('/', async (req, res) => {
         res.render('index', { commands });

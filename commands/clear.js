@@ -4,6 +4,7 @@ module.exports.config = {
   name: "clear",
   description: "clear message",
   usage: "clear {count}",
+  admin: true,
 };
 
 module.exports.run = async (bot, message, args) => {

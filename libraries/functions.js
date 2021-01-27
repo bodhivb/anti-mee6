@@ -5,6 +5,8 @@ const BaseCommand = {
   description: "none",
   usage: "-",
   aliases: [],
+  admin: false,
+  enabled: true
 };
 
 module.exports = (bot) => {
@@ -20,8 +22,10 @@ module.exports = (bot) => {
         command.config = MakeValid(command.config, BaseCommand);
         const commandName = command.config.name;
         command.config.file = file;
-        bot.commands.set(commandName, command);
-        console.log(`Loaded command ${commandName} (${file})`);
+        if (command.config.enabled) {
+          bot.commands.set(commandName, command);
+          console.log(`Loaded command ${commandName} (${file})`);
+        }
       });
     } catch (err) {
       console.log(`Error while loading commands. ${err}`);
@@ -37,7 +41,7 @@ module.exports = (bot) => {
         if (!file.endsWith(".js")) return;
         try {
           delete require.cache[require.resolve(`../commands/${file}`)];
-        } catch {}
+        } catch { }
       });
       bot.commands.clear();
     } catch (err) {
@@ -61,6 +65,10 @@ module.exports = (bot) => {
 
 function MakeValid(ob, compare) {
   let newob = {};
-  for (let prop in compare) newob[prop] = ob[prop] || compare[prop];
+  for (let prop in compare) newob[prop] = (!NullOrUndefined(ob[prop])) ? ob[prop] : compare[prop];
   return newob;
+}
+
+function NullOrUndefined(o) {
+  return (o == undefined || o == null);
 }

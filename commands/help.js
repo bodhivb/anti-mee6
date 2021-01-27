@@ -1,3 +1,4 @@
+const db = require('../libraries/dataManager');
 module.exports.config = {
   name: "help",
   description:
@@ -35,8 +36,11 @@ module.exports.run = async (bot, message, args) => {
   }
 
   //All commands
+  const { admin } = await db.GetUser(message.author);
   let helpMessages = [];
   bot.commands.forEach((command) => {
+    if (!command.config.enabled) return;
+    if (command.config.admin && !admin) return;
     helpMessages.push({
       name: command.config.name,
       value: command.config.description + `. \nUsage: \`@${bot.user.username}#${bot.user.discriminator} ` + command.config.usage + "`",

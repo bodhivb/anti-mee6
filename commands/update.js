@@ -5,6 +5,7 @@ module.exports.config = {
   name: "update",
   description: "Fetch git and restart bot",
   usage: "update",
+  admin: true,
 };
 
 module.exports.run = async (bot, message, args) => {
