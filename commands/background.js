@@ -1,10 +1,10 @@
 const get = require("simple-get");
 const db = require("../libraries/dataManager");
 module.exports.config = {
-  name: "background",
-  description: "change background image",
-  usage: "background {image url}",
-  aliases: ["bg"],
+    name: "background",
+    description: "change background image",
+    usage: "background {image url}",
+    aliases: ["bg"],
 };
 
 module.exports.run = async (bot, message, args) => {
@@ -30,16 +30,20 @@ module.exports.run = async (bot, message, args) => {
 
 function IsImage(url) {
     return new Promise(async (resolve) => {
-        get(url, function (err, response) {
-            if (err) resolve(false);
-            //check headers for image
-            if (!(response.headers['content-type']).match(/(image)+\//g)) resolve(false)
-            try {
-                if (((response.headers['content-type']).match(/(image)+\//g)).length != 0)
-                    resolve(true);
-            } catch (error) {
-                resolve(false);
-            }
-        })
+        try {
+            get(url, function (err, response) {
+                if (err) resolve(false);
+                //check headers for image
+                if (!(response.headers['content-type']).match(/(image)+\//g)) resolve(false)
+                try {
+                    if (((response.headers['content-type']).match(/(image)+\//g)).length != 0)
+                        resolve(true);
+                } catch (error) {
+                    resolve(false);
+                }
+            })
+        } catch (error) {
+            resolve(false)
+        }
     })
 }
