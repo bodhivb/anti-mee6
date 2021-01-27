@@ -15,6 +15,9 @@
             <th>Command</th>
             <th>Description</th>
             <th>Usage</th>
+            <% if (admin) { %>
+                <th>Admin</th>
+                <% } %>
             <th>Alias(es)</th>
         </tr>
         <% commands.forEach(function(command){ %>

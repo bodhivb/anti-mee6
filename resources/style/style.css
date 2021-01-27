@@ -45,3 +45,7 @@ table th {
     background-color: #62CFF6;
     color: white;
 }
+
+input[type="checkbox"][readonly] {
+    pointer-events: none;
+  }

@@ -8,6 +8,11 @@
     <td>
         <%= command.usage %>
     </td>
+    <% if (admin) { %>
+        <td>
+            <input type="checkbox" <%=command.admin ? 'checked' : '' %> readonly />
+        </td>
+        <% } %>
     <td>
         <%= command.aliases.join(', ')%>
     </td>
