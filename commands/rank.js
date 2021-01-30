@@ -32,7 +32,7 @@ module.exports.run = async (bot, message, args) => {
   await canvas.setBackground(user.bg || "./resources/images/mountains.png");
 
   //Draw background box
-  canvas.addBox(20, 20, 896, 242, "rgba(0,0,0,0.6)", 20);
+  canvas.addBox(20, 20, 896, 242, "rgba(0,0,0,0.7)", 20);
 
   //Draw avatar circle
   const avatarUrl = target.displayAvatarURL({ format: "jpg", size: 2048 });
