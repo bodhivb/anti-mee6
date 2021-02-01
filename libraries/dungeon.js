@@ -1,9 +1,4 @@
-const monk = require("monk");
-const db = monk(process.env.MONGODB_URI);
-
-db.then(() => {
-  console.log("Connected correctly to dungeon database.");
-});
+const { db } = require("./dataManager");
 
 const dungeonUsers = db.get("dungeonUsers");
 //Schemas -> ["id", "gold", "lastDailyReward"]

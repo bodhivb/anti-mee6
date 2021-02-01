@@ -90,3 +90,4 @@ function LevelUpMessage(msg, userLvl) {
 }
 module.exports.ChangeBackground = ChangeBackground;
 module.exports.GainExp = GainExp;
+module.exports.db = db;
