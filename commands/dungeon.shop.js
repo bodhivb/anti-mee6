@@ -16,10 +16,12 @@ module.exports.run = async (bot, message, args) => {
   embed.setColor("#0099ff");
 
   items.forEach((item) => {
-    embed.addFields({
-      name: `${item.emoji ? item.emoji + " " : ""}${item.name} - ${item.buy} gold`,
-      value: item.description,
-    });
+    if (item.buy) {
+      embed.addFields({
+        name: `${item.emoji ? item.emoji + " " : ""}${item.name} - ${item.buy} gold`,
+        value: item.description,
+      });
+    }
   });
 
   message.channel.send(embed);
