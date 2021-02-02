@@ -1,5 +1,6 @@
 const monk = require('monk');
 const db = monk(process.env.MONGODB_URI);
+const canvas = new (require('../libraries/discordCanvas'))();
 const { Colors } = require('./constants');
 
 
@@ -70,14 +71,35 @@ const GainExp = async (message, exp = 1, _user = undefined) => {
         const user = await GetUser(_user)
         const NewLvl = DoesLevelUP(user.level, user.exp, exp)
         users.findOneAndUpdate({ id: _user.id }, { $set: { level: NewLvl.newLvl, exp: NewLvl.newExp } })
-            .then(doc => {
+            .then(async doc => {
                 doc.admin = doc.admin || false;
-                if (NewLvl.lvlup) LevelUpMessage(message, doc)
+                if (NewLvl.lvlup) await LevelUpMessage(message, doc)
                 resolve({ lvlup: NewLvl.lvlup, user: doc });
             })
     })
 }
-function LevelUpMessage(msg, userLvl) {
+async function LevelUpMessage(msg, userLvl) {
+    const target = msg.author;
+    const user = userLvl;
+
+    //Set background image
+    await canvas.setBackground(user.bg || "./resources/images/mountains.png");
+
+    //Draw background box
+    canvas.addBox(20, 20, 896, 242, "rgba(0,0,0,0.6)", 20);
+
+    //Draw avatar circle
+    const avatarUrl = target.displayAvatarURL({ format: "jpg", size: 2048 });
+    await canvas.addCircleImage(60, 40, 202, avatarUrl, 8, "rgb(200, 255, 240)");
+
+    //Draw text
+    canvas.addText(299, 100, target.username, "56px Arial");
+    canvas.addText(299, 195, `Leveled up to level ${user.level}!`, "45px Arial");
+
+    //Draw line
+    canvas.addLine(304, 120, 874, 120, 2);
+    msg.channel.send(canvas.toAttachment("levelup.jpg"));
+    /*    
     let nextLvl = ExpNeeded(userLvl.level) - userLvl.exp;
     msg.channel.send({
         embed:
@@ -87,6 +109,7 @@ function LevelUpMessage(msg, userLvl) {
             description: `You leveled up to level: ${userLvl.level}\n\`${nextLvl}\` exp left to go for level ${userLvl.level + 1}`
         }
     })
+    */
 }
 module.exports.ChangeBackground = ChangeBackground;
 module.exports.GainExp = GainExp;
