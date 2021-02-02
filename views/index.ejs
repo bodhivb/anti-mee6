@@ -18,11 +18,13 @@
             <% if (admin) { %>
                 <th>Admin</th>
                 <% } %>
-            <th>Alias(es)</th>
+                    <th>Alias(es)</th>
         </tr>
         <% commands.forEach(function(command){ %>
-            <%- include('command', {command}); %>
-                <% }); %>
+            <% if (!command.admin || admin){ %>
+                <%- include('command', {command}); %>
+                    <% } %>
+                        <% }); %>
     </table>
 </body>
 
