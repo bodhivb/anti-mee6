@@ -21,10 +21,8 @@
                     <th>Alias(es)</th>
         </tr>
         <% commands.forEach(function(command){ %>
-            <% if (!command.admin || admin){ %>
-                <%- include('command', {command}); %>
-                    <% } %>
-                        <% }); %>
+            <%- include('command', {command}); %>
+                <% }); %>
     </table>
 </body>
 
