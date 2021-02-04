@@ -16,7 +16,9 @@ module.exports = (bot) => {
     const commands = bot.commands.map(command => { if (command.config.enabled) return command.config; });
 
     app.get('/', async (req, res) => {
-        res.render('index', { commands, admin: ('admin' in req.query) ? true : false });
+        const admin = ('admin' in req.query) ? true : false;
+        let cmds = commands.filter(command => !command.admin || admin);
+        res.render('index', { commands: cmds, admin });
     })
     app.get('/stats', async (req, res) => {
         const stats = await Stats(bot);
