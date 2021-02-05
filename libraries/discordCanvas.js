@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 module.exports = class DiscordCanvas {
   constructor() {
     Canvas.registerFont("./resources/fonts/arial.ttf", { family: "Arial" });
+    Canvas.registerFont("./resources/fonts/ariblk.ttf", { family: "Arial Black" });
     this.canvas = Canvas.createCanvas(936, 282);
     this.context = this.canvas.getContext("2d");
   }
