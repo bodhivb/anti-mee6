@@ -73,13 +73,13 @@ const GainExp = async (message, exp = 1, _user = undefined) => {
         users.findOneAndUpdate({ id: _user.id }, { $set: { level: NewLvl.newLvl, exp: NewLvl.newExp } })
             .then(async doc => {
                 doc.admin = doc.admin || false;
-                if (NewLvl.lvlup) await LevelUpMessage(message, doc)
+                if (NewLvl.lvlup) await LevelUpMessage(message, doc, _user)
                 resolve({ lvlup: NewLvl.lvlup, user: doc });
             })
     })
 }
-async function LevelUpMessage(msg, userLvl) {
-    const target = msg.author;
+async function LevelUpMessage(msg, userLvl, user = undefined) {
+    const target = user || msg.author;
     const user = userLvl;
 
     //Set background image
