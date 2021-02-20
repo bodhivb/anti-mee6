@@ -7,6 +7,7 @@ module.exports.config = {
   description: "Shop dungeon items",
   usage: "shop",
   admin: false,
+  aliases: ["store"],
 };
 
 module.exports.run = async (bot, message, args) => {

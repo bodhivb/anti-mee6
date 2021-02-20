@@ -4,9 +4,9 @@ const dungeon = require("../libraries/dungeon");
 const db = require("../libraries/dataManager");
 
 module.exports.config = {
-  name: "edititem",
+  name: "item-edit",
   description: "Edit item",
-  usage: "edititem {key} {value}",
+  usage: "item-edit {name} {key} {value}",
   admin: true,
 };
 
@@ -25,11 +25,12 @@ module.exports.run = async (bot, message, args) => {
           name = args
             .splice(0, i + 1)
             .join(" ")
-            .replace('"', "");
+            .replace('"', "")
+            .toLowerCase();
         }
       }
     } else {
-      name = args.shift();
+      name = args.shift().toLowerCase();
     }
 
     const key = args.shift();

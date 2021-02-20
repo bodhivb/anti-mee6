@@ -4,9 +4,9 @@ const dungeon = require("../libraries/dungeon");
 const db = require("../libraries/dataManager");
 
 module.exports.config = {
-  name: "deleteitem",
+  name: "item-delete",
   description: "Delete exist item",
-  usage: "deleteitem {name}",
+  usage: "item-delete {name}",
   admin: true,
 };
 
