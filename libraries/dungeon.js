@@ -31,6 +31,28 @@ const GetUser = async (user) => {
 };
 module.exports.GetUser = GetUser;
 
+const BuyItem = async (item, author) => {
+  return new Promise(async (resolve, reject) => {
+    if (author.bot) return reject({ reason: "User is a bot" });
+
+    if (!item || !item.buy)
+      return reject({ reason: "That item is not even in the store" });
+
+    const user = await this.GetUser(author);
+    if (item.buy > user.gold) {
+      return reject({ reason: "You don't have enough money to buy that item" });
+    }
+
+    resolve(
+      dungeonUsers.findOneAndUpdate(
+        { _id: user._id },
+        { $push: { inventory: item.name }, $inc: { gold: -item.buy } }
+      )
+    );
+  });
+};
+module.exports.BuyItem = BuyItem;
+
 // In future version it should be id instad of name
 const GetItem = (name) => dungeonItems.findOne({ name });
 module.exports.GetItem = GetItem;
@@ -50,6 +72,14 @@ const EditItem = (name, key, value) => {
   return dungeonItems.findOneAndUpdate({ name }, { $set: update });
 };
 module.exports.EditItem = EditItem;
+
+const DisplayItemName = (item) => {
+  return `${item.emoji ? item.emoji + " " : ""}${item.name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ")}`;
+};
+module.exports.DisplayItemName = DisplayItemName;
 
 const DailyBonus = async (message) => {
   return new Promise(async (resolve, reject) => {

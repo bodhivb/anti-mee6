@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
   items.forEach((item) => {
     if (item.buy) {
       embed.addFields({
-        name: `${item.emoji ? item.emoji + " " : ""}${item.name} - ${item.buy} gold`,
+        name: `${dungeon.DisplayItemName(item)} - ${item.buy} gold`,
         value: item.description,
       });
     }
