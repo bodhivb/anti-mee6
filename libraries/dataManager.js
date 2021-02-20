@@ -78,8 +78,8 @@ const GainExp = async (message, exp = 1, _user = undefined) => {
             })
     })
 }
-async function LevelUpMessage(msg, userLvl, user = undefined) {
-    const target = user || msg.author;
+async function LevelUpMessage(msg, userLvl, _user = undefined) {
+    const target = _user || msg.author;
     const user = userLvl;
 
     //Set background image
