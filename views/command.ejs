@@ -9,8 +9,8 @@
         <%= command.usage %>
     </td>
     <% if (admin) { %>
-        <td>
-            <input type="checkbox" <%=command.admin ? 'checked' : '' %> readonly />
+        <td style="text-align: center;">
+            <%=command.admin ? '✓' : '✗' %> 
         </td>
         <% } %>
     <td>
