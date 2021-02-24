@@ -1,6 +1,7 @@
 const { Bots, Guilds } = require("../libraries/constants");
 const canvas = new (require('../libraries/discordCanvas'))();
 const db = require("../libraries/dataManager");
+const userManager = require("../libraries/memberJoinManager");
 
 //ANTI-MEE6 hate role
 const HateroleID = "799593265178738788";
@@ -33,6 +34,7 @@ module.exports = async (bot, member) => {
     //Draw line
     canvas.addLine(304, 120, 874, 120, 2);
     let channel = await bot.channels.cache.get("799625532605988924")
-    channel.send(canvas.toAttachment("join.jpg"));
+    const msg = await channel.send(canvas.toAttachment("join.jpg"));
+    userManager.addUser(member.id, msg);
   }
 };
