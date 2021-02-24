@@ -9,6 +9,7 @@ module.exports.config = {
   description: "View inventory",
   usage: "inventory",
   admin: false,
+  aliases: ["inv"],
 };
 
 module.exports.run = async (bot, message, args) => {
@@ -60,6 +61,14 @@ module.exports.run = async (bot, message, args) => {
   //Draw inventory
   canvas.addBox(510, 15, 400, 252, "rgba(0,0,0,0.7)", 10);
   canvas.addText(670, 35, "Inventory", "18px Arial Black");
+
+  if (dungeonUser.inventory) {
+    dungeonUser.inventory.forEach((name, i) => {
+      canvas.addText(530, 28 * i + 75, name, "18px Arial");
+    });
+  } else {
+    canvas.addText(675, 135, "empty", "16px Arial Black");
+  }
 
   message.channel.send(canvas.toAttachment("inventory.jpg"));
 };
