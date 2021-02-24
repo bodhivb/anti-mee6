@@ -12,6 +12,9 @@ const dungeonItems = db.get("dungeonItems");
 //Schemas -> ["name", "description", "emoji"  "slot", "damage", "speed", "armor", "buy", "sell"]
 dungeonItems.createIndex(["name"]);
 
+const dailyCooldown = 20;
+
+
 //Slot
 // 2 Hand slots -> 1: hand left (sword) | 2: hand right (shield)
 // 3 Armor slots -> 3: helmet | 4: Chestplate | 5: Legging
@@ -88,7 +91,9 @@ const DailyBonus = async (message) => {
     if (user.lastDailyReward) {
       const availableDate = new Date(user.lastDailyReward);
       //Add a day
-      availableDate.setDate(availableDate.getDate() + 1);
+      //availableDate.setDate(availableDate.getDate() + 1);
+      
+      availableDate.setTime(availableDate.getTime() + (dailyCooldown * 60 * 60 * 1000))
 
       if (new Date() < availableDate) {
         return reject({
