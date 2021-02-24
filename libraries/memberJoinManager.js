@@ -8,7 +8,7 @@ const joinedUsers = {
             const i = this.users.indexOf({ user, msg });
             if (i > -1)
                 this.users.splice(i, 1);
-        }, time);
+        }, this.time);
     },
     getUser: function (userid) {
         const user = this.users.find(u => { return u === userid });
