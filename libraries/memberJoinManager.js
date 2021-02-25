@@ -1,8 +1,8 @@
 const joinedUsers = {
     users: [],
     time: (5 * 60 * 1000),
-    addUser: function (user, msg) {
-        const userObj = { user, msg }
+    addUser: function (userid, msg) {
+        const userObj = { userid, msg }
         this.users.push(userObj);
 
         setTimeout(() => {
@@ -12,7 +12,7 @@ const joinedUsers = {
         }, this.time);
     },
     getUser: function (userid) {
-        const user = this.users.find(u => { return u.user === userid });
+        const user = this.users.find(u => { return u.userid === userid });
         if (user) {
             user.msg.delete();
             const i = this.users.indexOf(user);
