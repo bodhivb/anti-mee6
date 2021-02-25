@@ -13,7 +13,6 @@ const joinedUsers = {
     },
     getUser: function (userid) {
         const user = this.users.find(u => { return u.user === userid });
-        console.log(user)
         if (user) {
             user.msg.delete();
             const i = this.users.indexOf(user);

@@ -35,7 +35,6 @@ module.exports = async (bot, member) => {
     canvas.addLine(304, 120, 874, 120, 2);
     let channel = await bot.channels.cache.get("799625532605988924")
     const msg = await channel.send(canvas.toAttachment("join.jpg"));
-    console.log(msg);
     userManager.addUser(member.id, msg);
   }
 };
