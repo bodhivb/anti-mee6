@@ -1,5 +1,5 @@
 const { Bots, Guilds } = require("../libraries/constants");
-const canvas = new (require('../libraries/discordCanvas'))();
+const canvas = new (require("../libraries/discordCanvas"))();
 const db = require("../libraries/dataManager");
 const userManager = require("../libraries/memberJoinManager");
 
@@ -16,6 +16,22 @@ module.exports = async (bot, member) => {
   } else if (guild.id === Guilds.ANTIMEE6) {
     const userOb = await bot.users.fetch(member.id);
     const user = await db.GetUser(userOb);
+
+    //Guild invited tracking
+    const guildInvites = await guild.fetchInvites();
+
+    //Check if invite counter has increased or new one
+    const invite = guildInvites.find((i) => {
+      const pre = bot.guildInvites.get(i.code);
+      return (pre && pre.uses < i.uses) || (!pre && i.uses === 1);
+    });
+
+    if (invite) {
+      const inviter = await guild.members.cache.get(invite.inviter.id);
+      await channel.send(`Invite by ${inviter} `);
+    }
+
+    bot.guildInvites = guildInvites;
 
     //Set background image
     await canvas.setBackground(user.bg || "./resources/images/mountains.png");
