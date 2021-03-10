@@ -1,5 +1,6 @@
+const Discord = require("discord.js");
 const { Bots, Guilds } = require("../libraries/constants");
-const canvas = new (require('../libraries/discordCanvas'))();
+const canvas = new (require("../libraries/discordCanvas"))();
 const db = require("../libraries/dataManager");
 const userManager = require("../libraries/memberJoinManager");
 
@@ -17,6 +18,18 @@ module.exports = async (bot, member) => {
     const userOb = await bot.users.fetch(member.id);
     const user = await db.GetUser(userOb);
 
+    //Guild invited tracking
+    const guildInvites = await guild.fetchInvites();
+
+    //Check if invite counter has increased or new one
+    const invite = guildInvites.find((i) => {
+      const pre = bot.guildInvites.get(i.code);
+      return (pre && pre.uses < i.uses) || (!pre && i.uses === 1);
+    });
+
+    const inviter = await bot.users.fetch(invite.inviter.id);
+    bot.guildInvites = guildInvites;
+
     //Set background image
     await canvas.setBackground(user.bg || "./resources/images/mountains.png");
 
@@ -33,8 +46,24 @@ module.exports = async (bot, member) => {
 
     //Draw line
     canvas.addLine(304, 120, 874, 120, 2);
-    let channel = await bot.channels.cache.get("799625532605988924")
-    const msg = await channel.send(canvas.toAttachment("join.jpg"));
+
+    const embed = new Discord.MessageEmbed();
+    const channel = await bot.channels.cache.get("799625532605988924");
+
+    //Send message
+    embed.setDescription(
+      `**Welcome to Anti-MEE6 server, ${userOb}!** \n\nBe sure to read #rules and assign yourself some roles in #auto-roles.\nEnjoy your stay!`
+    );
+
+    if (invite) {
+      embed.setDescription(embed.description + ` Invited by ${inviter}.`);
+    }
+
+    embed.setColor("#00d166");
+    embed.attachFiles(canvas.toAttachment("join.jpg"));
+    embed.setImage("attachment://join.jpg");
+
+    const msg = await channel.send(embed);
     userManager.addUser(member.id, msg);
   }
 };
