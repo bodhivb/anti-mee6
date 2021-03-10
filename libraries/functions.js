@@ -68,6 +68,8 @@ function MakeValid(ob, compare) {
   for (let prop in compare) newob[prop] = (!NullOrUndefined(ob[prop])) ? ob[prop] : compare[prop];
   return newob;
 }
+module.exports.MakeValid = MakeValid;
+module.exports.baseCommand = BaseCommand;
 
 function NullOrUndefined(o) {
   return (o == undefined || o == null);
