@@ -60,8 +60,8 @@ module.exports = {
         for (let i = 0; i < this.messageLog.length; i++) {
             const msg = this.messageLog[i];
             let user = users.find(u => { return u.id == msg.id; });
-            if (this.excluded.includes(user.id)) return; //Ignore excluded
             if (user) {
+                if (this.excluded.includes(user.id)) return; //Ignore excluded
                 user.count++;
                 if (this.hasAttachment(msg.msg))
                     newUser.attachments++;
