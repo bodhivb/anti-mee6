@@ -21,7 +21,7 @@ To start developing bot, request first token at https://discordapp.com/developer
 No working? Or do you have any questions? You can always ask on the discord server.
 
 
-## [Commands](https://github.com/Bodhivb/anti-mee6/blob/production/COMMANDS.md)
+## [Commands](https://github.com/Bodhivb/anti-mee6/blob/production/commands.md)
 
-[Commands](https://github.com/Bodhivb/anti-mee6/blob/production/COMMANDS.md)
+[Commands](https://github.com/Bodhivb/anti-mee6/blob/production/commands.md)
 

@@ -12,16 +12,6 @@ const func = require("./libraries/functions");
     process.exit(0);
 })()
 
-async function GenerateReadme() {
-    return new Promise(async resolve => {
-        const commands = await GenerateCommandList();
-        fs.writeFileSync("./COMMANDS.md", text);
-
-
-        resolve();
-    })
-}
-
 function GenerateCommandList() {
     return new Promise(resolve => {
         let text = "## Commands\n\n"
