@@ -21,7 +21,7 @@ class Spam {
     static excluded = ["151423248020537345", "151039550234296320", "463855122129223690", "800004055606099979", "799587364346527744"]
     static bannedLinks = ["https://discord.com/oauth2/authorize"]
     static inviteLinks = ['discord.gg/', 'discordapp.com/invite/']
-    static time = (60 * 1000)
+    static time = (5 * 1000)
     static MUTE = undefined //Assign this to a funcion that can mute based on message object
     static MAX = { attachments: 3, messages: 6 }
     static MESSAGES = { inviteLink: "Do not send Discord invites in this server", badLink: "That link was banned!", spam: "STOP it, spamming is not allowed, what are you?\nMEE6?!🤬" }

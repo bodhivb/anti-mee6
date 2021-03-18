@@ -1,5 +1,5 @@
 const emoji = ["💩", "🤮", "🤢"];
-const { Bots } = require("../libraries/constants");
+const { Bots, Guilds } = require("../libraries/constants");
 const emojiBully = require("../triggers/emojiBully");
 const Spam = require("../libraries/spam");
 
@@ -19,7 +19,8 @@ module.exports = async (bot, message) => {
   const prefix = "?";
 
   //Check for spam 
-  Spam.Message(message);
+  if (message.guild.id == Guilds.ANTIMEE6)
+    Spam.Message(message);
 
 
   //TODO: Make check mention function
