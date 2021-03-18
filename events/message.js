@@ -1,7 +1,7 @@
 const emoji = ["💩", "🤮", "🤢"];
 const { Bots } = require("../libraries/constants");
 const emojiBully = require("../triggers/emojiBully");
-const SpamChecker = require("../libraries/spam");
+const Spam = require("../libraries/spam");
 
 // Handling an incoming message
 module.exports = async (bot, message) => {
@@ -19,7 +19,7 @@ module.exports = async (bot, message) => {
   const prefix = "?";
 
   //Check for spam 
-  SpamChecker.Message(message);
+  Spam.Message(message);
 
 
   //TODO: Make check mention function

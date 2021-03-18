@@ -5,7 +5,8 @@ const func = require("./libraries/functions");
 
 //run when launched, add Functions calls here if more needs to be added.
 (async () => {
-    await GenerateReadme();
+    const text = await GenerateCommandList();
+    fs.writeFileSync("./commands.md", text);
 
 
     process.exit(0);
@@ -21,16 +22,15 @@ async function GenerateReadme() {
     })
 }
 
-
 function GenerateCommandList() {
     return new Promise(resolve => {
-        let text = ""
+        let text = "## Commands\n\n"
 
         fs.readdirSync("./commands/").forEach((file) => {
             //Only js code may be loaded
             if (!file.endsWith(".js")) return;
             let command = require(`./commands/${file}`).config;
-            command = func.MakeValid(command, func.baseCommand);
+            command = func.MakeValid(command , func.baseCommand);
             if (command.enabled && !command.admin) {
                 console.log(`Command found: ${command.name} (${file})`);
                 text += `#### ${command.name}  \n${command.description}  \nUsage: \`@Anti-MEE6#5212 ${command.usage}\`  \n`

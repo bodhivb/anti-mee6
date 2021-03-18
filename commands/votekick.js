@@ -1,16 +1,26 @@
 const db = require("../libraries/dataManager");
 const Discord = require("discord.js");
-const { toMention, Bots } = require("../libraries/constants");
+const { toMention, Bots, Guilds } = require("../libraries/constants");
+const { CanRunCommand } = require("../libraries/functions");
 
 module.exports.config = {
   name: "votekick",
   description: "Start vote to kick MEE6",
   usage: "votekick",
   admin: true,
+  needmee6: true
 };
 
 module.exports.run = async (bot, message, args) => {
   if ((await db.GetUser(message.author)).admin) {
+    
+
+    const _CanRun = CanRunCommand(this.config, message);
+    if (_CanRun) {
+      message.channel.send(_CanRun);
+      return;
+    }
+
     //Set target
     const target = message.mentions.users.first()
       ? message.mentions.users.first()
@@ -80,9 +90,9 @@ module.exports.run = async (bot, message, args) => {
       embed.addField(
         "⏱️ Timer is over",
         "Time has passed and the team has decided to " +
-          (isKick
-            ? `**kick** ${target} off the server`
-            : `**keep** ${target} on the server`)
+        (isKick
+          ? `**kick** ${target} off the server`
+          : `**keep** ${target} on the server`)
       );
       msg.edit(embed);
 
