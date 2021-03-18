@@ -1,6 +1,7 @@
 require("dotenv").config();
 const fs = require("fs");
 const Discord = require("discord.js");
+const Spam = require("./libraries/spam");
 
 const bot = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 bot.commands = new Discord.Collection();
@@ -24,6 +25,11 @@ try {
   });
 } catch (err) {
   console.log(`Error while loading events. ${err}`);
+}
+
+//set spam function
+Spam.MUTE = (msg) => {
+  msg.author.send("HEY! Stop spamming!")
 }
 
 // Start bot

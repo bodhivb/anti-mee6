@@ -16,59 +16,63 @@ Maybe a way to exclude image channels from attachment limit
 
 */
 
-module.exports = {
-    messageLog: [],
-    excluded: ["151423248020537345", "151039550234296320", "463855122129223690", "800004055606099979", "799587364346527744"],
-    bannedLinks: ["https://discord.com/oauth2/authorize"],
-    inviteLinks: ['discord.gg/', 'discordapp.com/invite/'],
-    time: (60 * 1000),
-    MUTE: undefined, //Assign this to a funcion that can mute based on message object
-    MAX: { attachments: 3, messages: 5 },
-    MESSAGES: { inviteLink: "Do not send Discord invites in this server", badLink: "That link was banned!", spam: "STOP it, spamming is not allowed, what are you?\nMEE6?!🤬" },
-    hasAttachment: function (msg) { return (msg.attachments.size > 0); },
-    hasBannedLink: function (msg) {
-        return new RegExp(this.bannedLinks.join("|")).test(msg.content);//Improve filtering          
-    },
-    hasInviteLink: function (msg) {
-        return new RegExp(this.inviteLinks.join("|")).test(msg.content);//Improve filtering          
-    },
-    Message: function (msg) {
-        if (this.hasBannedLink(msg)) {
-            msg.author.send(this.MESSAGES.badLink)
+class Spam {
+    static messageLog = []
+    static excluded = ["151423248020537345", "151039550234296320", "463855122129223690", "800004055606099979", "799587364346527744"]
+    static bannedLinks = ["https://discord.com/oauth2/authorize"]
+    static inviteLinks = ['discord.gg/', 'discordapp.com/invite/']
+    static time = (60 * 1000)
+    static MUTE = undefined //Assign this to a funcion that can mute based on message object
+    static MAX = { attachments: 3, messages: 6 }
+    static MESSAGES = { inviteLink: "Do not send Discord invites in this server", badLink: "That link was banned!", spam: "STOP it, spamming is not allowed, what are you?\nMEE6?!🤬" }
+    static EnableExcluded = true
+    static hasAttachment(msg) { return (msg.attachments.size > 0); }
+    static hasBannedLink(msg) {
+        return new RegExp(Spam.bannedLinks.join("|")).test(msg.content);//Improve filtering          
+    }
+    static hasInviteLink(msg) {
+        return new RegExp(Spam.inviteLinks.join("|")).test(msg.content);//Improve filtering          
+    }
+    static Message(msg) {
+        if (Spam.excluded.includes(msg.author.id) && Spam.EnableExcluded)
+            return; //Ignore excluded
+
+
+        if (Spam.hasBannedLink(msg)) {
+            msg.author.send(Spam.MESSAGES.badLink)
             msg.delete();
             return;
         }
-        if (this.hasInviteLink(msg)) {
-            msg.author.send(this.MESSAGES.inviteLink)
+        if (Spam.hasInviteLink(msg)) {
+            msg.author.send(Spam.MESSAGES.inviteLink)
             msg.delete();
             return;
         }
 
-        let object = { msg, userid: msg.author.id, hasAttachment: this.hasAttachment(msg) };
+        let object = { msg, userid: msg.author.id, hasAttachment: Spam.hasAttachment(msg) };
 
-        this.messageLog.push(object)
+        Spam.messageLog.push(object)
         setTimeout(() => {
-            const i = this.messageLog.indexOf(object);
+            const i = Spam.messageLog.indexOf(object);
             if (i > -1) {
-                this.messageLog.splice(i, 1);
+                Spam.messageLog.splice(i, 1);
             }
-        }, this.time);
-        this.CheckLogs();
-    },
-    CheckLogs: function () {
+        }, Spam.time);
+        Spam.CheckLogs();
+    }
+    static CheckLogs() {
         let users = [];
-        for (let i = 0; i < this.messageLog.length; i++) {
-            const msg = this.messageLog[i];
-            let user = users.find(u => { return u.id == msg.id; });
+        for (let i = 0; i < Spam.messageLog.length; i++) {
+            const msg = Spam.messageLog[i];
+            let user = users.find(u => { return u.id == msg.userid; });
             if (user) {
-                if (this.excluded.includes(user.id)) return; //Ignore excluded
                 user.count++;
-                if (this.hasAttachment(msg.msg))
-                    newUser.attachments++;
+                if (Spam.hasAttachment(msg.msg))
+                    user.attachments++;
 
-                if (user.count >= this.MAX.messages || user.attachments >= this.MAX.attachments) {
+                if (user.count >= Spam.MAX.messages || user.attachments >= Spam.MAX.attachments) {
                     try {
-                        MUTE(msg.msg);
+                        Spam.MUTE(msg.msg);
                     } catch (error) {
                         //throw new Error('Mute function not defined');//comment away to continue running 
                         console.log("No MUTE function defined for spam library.");
@@ -76,19 +80,21 @@ module.exports = {
                 }
             } else {
                 let newUser = {
-                    id: msg.id,
+                    id: msg.userid,
                     count: 1,
                     attachments: 0
                 };
-                if (this.hasAttachment(msg.msg))
+                if (Spam.hasAttachment(msg.msg))
                     newUser.attachments = 1;
 
                 users.push(newUser);
             }
         }
-    },
-    KICK: function (msg) {
+    }
+    static KICK(msg) {
         const member = msg.guild.members.fetch(msg.author.id);
         member.kick();
     }
+    constructor() { }
 }
+module.exports = Spam;
