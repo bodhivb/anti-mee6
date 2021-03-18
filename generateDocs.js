@@ -14,9 +14,7 @@ const func = require("./libraries/functions");
 async function GenerateReadme() {
     return new Promise(async resolve => {
         const commands = await GenerateCommandList();
-        const template = await fs.promises.readFile("./resources/readme-template.md")
-        const text = template.toString().replace("<_COMMANDS>", commands);
-        fs.writeFileSync("./README.md", text);
+        fs.writeFileSync("./COMMANDS.md", text);
 
 
         resolve();
