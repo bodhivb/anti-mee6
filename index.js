@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const Discord = require("discord.js");
 const Spam = require("./libraries/spam");
+const { StaticObjects, Guilds, Channels } = require("./libraries/constants");
 
 const bot = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 bot.commands = new Discord.Collection();
@@ -14,6 +15,12 @@ bot.loadCommands();
 
 require("./libraries/website")(bot); //create website
 
+//automatically get objects we (might) need globally
+(async () => {
+  StaticObjects.Guilds["ANTIMEE6"] = await bot.guilds.fetch(Guilds.ANTIMEE6);
+  StaticObjects.Channels["HALLOFFAME"] = await bot.channels.fetch(Channels.HALLOFFAME);
+})()
+
 // Loads each event in "events" folder
 console.log("Loading events...");
 try {
@@ -25,6 +32,7 @@ try {
   });
 } catch (err) {
   console.log(`Error while loading events. ${err}`);
+  console.log(err.stack);
 }
 
 //set spam function
