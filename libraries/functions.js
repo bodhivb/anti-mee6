@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { toMention, Bots, Guilds } = require("../libraries/constants");
 
 const BaseCommand = {
   name: "wip",
@@ -6,7 +7,9 @@ const BaseCommand = {
   usage: "-",
   aliases: [],
   admin: false,
-  enabled: true
+  enabled: true,
+  supportServer: false,
+  needmee6: false
 };
 
 module.exports = (bot) => {
@@ -70,6 +73,22 @@ function MakeValid(ob, compare) {
 }
 module.exports.MakeValid = MakeValid;
 module.exports.baseCommand = BaseCommand;
+
+//works weirdly, but returns message if cannot run, so check if undefined, if not send whatever it returns as message
+function CanRunCommand(config, message) {
+  let msg;
+  const _MEE6Member = message.guild.members.cache.find(x => x.id == Bots.MEE6);
+  if ((message.guild.id !== Guilds.ANTIMEE6 && config.supportServer) || (!_MEE6Member && config.needmee6)) {
+    if (message.guild.id !== Guilds.ANTIMEE6 && config.supportServer) {
+      msg = `Cannot run this command in this server!`;
+    }
+    if (!_MEE6Member && config.needmee6) {
+      msg = `Cannot run this command without MEE6 in the server!`;
+    }
+  } else return;
+  return msg;
+}
+module.exports.CanRunCommand = CanRunCommand;
 
 function NullOrUndefined(o) {
   return (o == undefined || o == null);
