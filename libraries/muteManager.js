@@ -1,12 +1,17 @@
 //Mute someone
 module.exports.muteUser = async (message, member, date, reason = "") => {
-  let muteRole = await message.guild.roles.cache.find((r) => r.name === "Muted");
+  return new Promise((res) => {
+    let muteRole = message.guild.roles.cache.find((r) => r.name === "Muted");
 
-  if (!muteRole) {
-    muteRole = await this.createMuteRole(message);
-  }
+    if (!muteRole) {
+      muteRole = this.createMuteRole(message);
+    }
 
-  member.roles.add(muteRole.id).cache(message.channel.send);
+    member.roles
+      .add(muteRole.id)
+      .then(() => res(true))
+      .catch(() => res(false));
+  });
 };
 
 //Setting up the muted role
