@@ -1,3 +1,5 @@
+const { Channels } = require("./constants");
+
 //Mute someone
 module.exports.muteUser = async (message, member, date, reason = "") => {
   return new Promise((res) => {
@@ -9,7 +11,11 @@ module.exports.muteUser = async (message, member, date, reason = "") => {
 
     member.roles
       .add(muteRole.id)
-      .then(() => res(true))
+      .then(() => {
+        this.sendInfo(message, member, date, reason);
+        this.logPrisoner(message, member, date, reason);
+        res(true);
+      })
       .catch(() => res(false));
   });
 };
@@ -53,4 +59,42 @@ module.exports.createMuteRole = async (message) => {
   );
 
   return muteRole;
+};
+
+// Only Anti-MEE6 guild (jail)
+module.exports.sendInfo = (message, member, date, reason = "") => {
+  const msg = [
+    member,
+    `You don't follow the #rules and so you are now **muted** for ${date}.`,
+    `Reason: ${reason}.\n`,
+    "If you think this action is a mistake, let us explain via chat here.",
+  ].join("\n");
+  message.guild.channels.cache.get(Channels.JAIL).send(msg);
+};
+
+// Only Anti-MEE6 guild (prisoner-logs)
+module.exports.logPrisoner = (message, member, date, reason = "", said = "") => {
+  const body = [
+    `**User:** ${member}`,
+    `**Duration:** ${date}`,
+    `**Reason:** ${reason}`,
+    `**Channel:** ${message.channel}`,
+    `**Message:** ${said}`,
+  ].join("\n");
+
+  message.guild.channels.cache.get(Channels.PRISONERLOGS).send({
+    embed: {
+      author: {
+        name: `${member.user.tag} muted`,
+        icon_url: member.user.displayAvatarURL({ dynamic: true }),
+      },
+      description: body,
+      color: 11873778,
+      footer: {
+        text: `Muted by ${message.author.tag}`,
+        icon_url: message.author.displayAvatarURL({ dynamic: true }),
+      },
+      timestamp: message.createAt,
+    },
+  });
 };

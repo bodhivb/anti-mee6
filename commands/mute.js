@@ -15,6 +15,6 @@ module.exports.run = async (bot, message, args) => {
 
   //Set targer
   const targetUser = message.mentions.members.first();
-  const success = await muteUser(message, targetUser, args[1], args[2]);
+  const success = await muteUser(message, targetUser, args[1], args.slice(2).join(" "));
   message.react(success ? "✅" : "❌");
 };
