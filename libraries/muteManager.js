@@ -42,7 +42,7 @@ module.exports.createMuteRole = async (message) => {
 
       //Channel who does not sync with category
       if (channel.parent && !channel.permissionsLocked) {
-        channel.updateOverwrite(muteRole, mutePermission);
+        await channel.updateOverwrite(muteRole, mutePermission);
       }
     })
   );
