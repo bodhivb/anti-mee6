@@ -19,8 +19,9 @@ module.exports = async (bot, message) => {
   const prefix = "?";
 
   //Check for spam 
-  if (message.guild.id == Guilds.ANTIMEE6)
-    Spam.Message(message);
+  if (message.guild)
+    if (message.guild.id == Guilds.ANTIMEE6)
+      Spam.Message(message);
 
 
   //TODO: Make check mention function
