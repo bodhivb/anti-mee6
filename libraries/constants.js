@@ -24,7 +24,9 @@ module.exports.Emojis = Object.freeze({
 });
 
 module.exports.Channels = Object.freeze({
-  HALLOFFAME: "822092074778099794"
+  HALLOFFAME: (process.env.ENVIRONMENT == "DEV") ? "822570995227033630" : "822092074778099794",
+  JAIL: "822863280652943400",
+  PRISONERLOGS: "822864846096957490",
 });
 
 module.exports.Colors = Object.freeze({ BLUE: "#62d0f6" });

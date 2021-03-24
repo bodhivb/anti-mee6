@@ -6,7 +6,7 @@ module.exports = async (bot, message) => {
 
     //Start vote
     const filter = (reaction, user) => "hatemee6" == reaction.emoji.name;
-    const collector = message.createReactionCollector(filter, { dispose: true, time: 15000 });
+    const collector = message.createReactionCollector(filter, { dispose: true, time: (20 * 1000) });
 
     let voted = [];
 

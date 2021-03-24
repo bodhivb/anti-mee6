@@ -23,10 +23,11 @@ class Spam {
     static inviteLinks = ['discord.gg/', 'discordapp.com/invite/']
     static time = (5 * 1000)
     static MUTE = undefined //Assign this to a funcion that can mute based on message object
-    static MAX = { attachments: 3, messages: 6 }
+    static MAX = { attachments: 3, mentions: 4, messages: 6 }
     static MESSAGES = { inviteLink: "Do not send Discord invites in this server", badLink: "That link was banned!", spam: "STOP it, spamming is not allowed, what are you?\nMEE6?!🤬" }
-    static EnableExcluded = true
+    static EnableExcluded = false
     static hasAttachment(msg) { return (msg.attachments.size > 0); }
+    static hasMention(msg) { return (msg.mentions.members.size > 0 || msg.mentions.roles.size > 0 || msg.mentions.everyone); }
     static hasBannedLink(msg) {
         return new RegExp(Spam.bannedLinks.join("|")).test(msg.content);//Improve filtering          
     }
@@ -60,19 +61,21 @@ class Spam {
         }, Spam.time);
         Spam.CheckLogs();
     }
-    static CheckLogs() {
+    static CheckLogs () {
         let users = [];
         for (let i = 0; i < Spam.messageLog.length; i++) {
             const msg = Spam.messageLog[i];
-            let user = users.find(u => { return u.id == msg.userid; });
+            let user = users.find(u => { return u.id == msg.id; });        
             if (user) {
                 user.count++;
                 if (Spam.hasAttachment(msg.msg))
                     user.attachments++;
+                if (Spam.hasMention(msg.msg))
+                    user.mentions++;
 
-                if (user.count >= Spam.MAX.messages || user.attachments >= Spam.MAX.attachments) {
+                if (Spam.ExceededLimits(user)) {
                     try {
-                        Spam.MUTE(msg.msg);
+                        MUTE(msg.msg);
                     } catch (error) {
                         //throw new Error('Mute function not defined');//comment away to continue running 
                         console.log("No MUTE function defined for spam library.");
@@ -80,21 +83,32 @@ class Spam {
                 }
             } else {
                 let newUser = {
-                    id: msg.userid,
+                    id: msg.id,
                     count: 1,
-                    attachments: 0
+                    attachments: 0,
+                    mentions: 0
                 };
                 if (Spam.hasAttachment(msg.msg))
                     newUser.attachments = 1;
+                if (Spam.hasMention(msg.msg))
+                    newUser.mentions = 1;
 
                 users.push(newUser);
             }
         }
     }
+
+    static ExceededLimits(user) {
+        const exceeded = []
+        exceeded.push(user.count >= Spam.MAX.messages); // message limit
+        exceeded.push(user.attachments >= Spam.MAX.attachments); // attachment limit
+        exceeded.push(user.mentions >= Spam.MAX.mentions); // mention limit
+        return exceeded.includes(true)
+    }
+
     static KICK(msg) {
         const member = msg.guild.members.fetch(msg.author.id);
         member.kick();
     }
-    constructor() { }
 }
 module.exports = Spam;
