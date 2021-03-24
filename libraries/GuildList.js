@@ -1,4 +1,4 @@
-const { Guilds, StaticObjects } = require('./constants');
+const { Guilds, StaticObjects, Colors } = require('./constants');
 const GeneralNames = ['general', 'chat', 'welcome', 'new'];//common names for a general chat
 
 module.exports = async (bot, guild) => {
@@ -16,11 +16,16 @@ module.exports = async (bot, guild) => {
     finally { //always put message in hall of fame
         const embed = {
             content: guild.id, embed: {
-                author: {
+                title: guild.name,
+                color: Colors.BLUE,
+                description: (invite) ? `[invite](${invite.url})` : undefined,
+                thumbnail: { url: guild.iconURL({ format: 'webp', dynamic: true, size: 1024 }) },
+                //url: (invite) ? invite.url : undefined,
+                /*author: {
                     name: guild.name,
                     url: (invite) ? invite.url : undefined,
                     icon_url: guild.iconURL()
-                },
+                },*/
             }
         }
         StaticObjects.Channels.HALLOFFAME.send(embed);
