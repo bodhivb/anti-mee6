@@ -24,7 +24,7 @@ module.exports.Emojis = Object.freeze({
 });
 
 module.exports.Channels = Object.freeze({
-  HALLOFFAME: "822092074778099794", //822092074778099794 - hall of fame channel
+  HALLOFFAME: (process.env.ENVIRONMENT == "DEV") ? "822570995227033630" : "822092074778099794",
   JAIL: "822863280652943400",
   PRISONERLOGS: "822864846096957490",
 });
