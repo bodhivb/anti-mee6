@@ -24,7 +24,7 @@ module.exports.Emojis = Object.freeze({
 });
 
 module.exports.Channels = Object.freeze({
-  HALLOFFAME: "822092074778099794",
+  HALLOFFAME: "822092074778099794", //822092074778099794 - hall of fame channel
   JAIL: "822863280652943400",
   PRISONERLOGS: "822864846096957490",
 });
