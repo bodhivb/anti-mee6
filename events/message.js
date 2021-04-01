@@ -13,7 +13,7 @@ module.exports = async (bot, message) => {
       emojiBully(bot, message);
     }
   } //else if (message.content.toLowerCase().includes('mee6 '))emojiBully(bot, message); //bully people who say mee6 (disabled for now)
-  if (message.author.bot || message.webhookID) return; //if bot or webhook skip
+  if (message.author.bot || message.webhookID || message.channel.type === "dm") return; //if bot, webhook or dm -> skip
 
   const mention = "<@!" + bot.user.id + ">";
   const prefix = "?";
