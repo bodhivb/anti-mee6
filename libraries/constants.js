@@ -27,17 +27,23 @@ module.exports.Channels = Object.freeze({
   HALLOFFAME: (process.env.ENVIRONMENT == "DEV") ? "822570995227033630" : "822092074778099794",
   JAIL: "822863280652943400",
   PRISONERLOGS: "822864846096957490",
+  AUTOROLES: "828689716244905985",
 });
 
 module.exports.Colors = Object.freeze({ BLUE: "#62d0f6" });
 
 module.exports.toMention = (value) => "<@" + value + ">";
 
-
-class StaticObjects{
+class StaticObjects {
   static Guilds = {};
   static Channels = {};
-
 }
 
 module.exports.StaticObjects = StaticObjects;
+
+module.exports.ANTIMEE6Roles = Object.freeze([
+  { emoji: "🎨", role: "828696577827668019" },
+  { emoji: "⌨️", role: "828697116825747457" },
+  { emoji: "NekoHeart", role: "828697278135009302" },
+  { emoji: "🎮", role: "828697701855002685" },
+]);

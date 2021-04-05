@@ -1,4 +1,4 @@
-const { Guilds } = require("../libraries/constants");
+const { Guilds, Channels } = require("../libraries/constants");
 
 module.exports = async (bot) => {
   console.log(`Logged in as ${bot.user.tag}`);
@@ -11,4 +11,7 @@ module.exports = async (bot) => {
 
   //Initialize member join tracking invites
   bot.guildInvites = await bot.guilds.cache.get(Guilds.ANTIMEE6).fetchInvites();
+
+  //Fetch auto-roles channel for emoji response
+  await (await bot.channels.fetch(Channels.AUTOROLES)).messages.fetch();
 };
