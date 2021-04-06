@@ -3,9 +3,15 @@ module.exports = (bot) => {
   var loggerTime;
   var loggerMessage = "```";
 
+  process.on('uncaughtException', (err) => {
+    console.error(err);
+  })
+
   console.log = function (message) {
-    if (typeof message === "object")
-      message = JSON.stringify(message, null, 2);
+    if (typeof message === "object") //if error message
+      if ('stack' in message) message = message.stack;
+      else
+        message = JSON.stringify(message, null, 2);
 
     process.stdout.write(message + "\n");
 
@@ -14,6 +20,8 @@ module.exports = (bot) => {
   };
 
   console.error = function (message) {
+    if ('stack' in message) message = message.stack; //if error message
+
     process.stdout.write(message + "\n");
     loggerMessage += message + "\n";
     SendTimeOut();
