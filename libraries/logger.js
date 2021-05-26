@@ -1,29 +1,25 @@
 const gGreen = "\x1b[32m";
+const util = require("util");
+
 module.exports = (bot) => {
   var loggerTime;
   var loggerMessage = "```";
 
-  process.on('uncaughtException', (err) => {
+  process.on("uncaughtException", (err) => {
     console.error(err);
-  })
+  });
 
-  console.log = function (message) {
-    if (typeof message === "object") //if error message
-      if ('stack' in message) message = message.stack;
-      else
-        message = JSON.stringify(message, null, 2);
-
-    process.stdout.write(message + "\n");
-
-    loggerMessage += message + "\n";
+  console.log = function () {
+    const message = util.format.apply(null, arguments) + "\n";
+    process.stdout.write(message);
+    loggerMessage += message;
     SendTimeOut();
   };
 
-  console.error = function (message) {
-    if ('stack' in message) message = message.stack; //if error message
-
-    process.stdout.write(message + "\n");
-    loggerMessage += message + "\n";
+  console.error = function () {
+    const message = util.format.apply(null, arguments) + "\n";
+    process.stdout.write(`\x1b[31m${message}\x1b[0m`);
+    loggerMessage += message;
     SendTimeOut();
   };
 
